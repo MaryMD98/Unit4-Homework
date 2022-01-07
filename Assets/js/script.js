@@ -2,7 +2,11 @@
 // var container
 var questionH = document.querySelector(".question");
 var answersH = document.querySelector(".answers");
-var multipleAnswer = document.querySelector("#multianswer");
+var startBTN = document.querySelector("#start");
+var multipleAnswer1 = document.querySelector("#multianswer1");
+var multipleAnswer2 = document.querySelector("#multianswer2");
+var multipleAnswer3 = document.querySelector("#multianswer3");
+var multipleAnswer4 = document.querySelector("#multianswer4");
 
 var questionNumCount = 0;
 var answerIndex = 0;
@@ -36,25 +40,48 @@ var correctAns = [
 
 //function to display questions and answers to console
 function questionDisplay(){
-    // for(var i =0; i < questionNumCount; i++){
-        questionH.textContent = questionString[questionNumCount];
-        //console.log(questionString[i]);
-        
-        //for loops to display answers answerIndex max is 19
-        for(var x=0; x <= 3; x++){
-            answersH.children[x].textContent = answerString[answerIndex];
-           // console.log(answerString[answerIndex]);
-            answerIndex++;
-        }
-        questionNumCount++;
-        console.log(answerIndex);
-        console.log(questionNumCount);
-    // }
+    questionH.textContent = questionString[questionNumCount];
+    
+    //for loops to display answers answerIndex max is 19
+    for(var x=0; x <= 3; x++){
+        answersH.children[x].textContent = answerString[answerIndex];
+        answerIndex++;
+    }
+    questionNumCount++;
 }
+
+//check if answer selected is correct
+function checkifCorrect(){
+
+}
+
+// start button -> on click display question
+startBTN.addEventListener("click", function(event){
+    event.preventDefault();
+    questionDisplay();
+});
 
 //when question answer -> next one displays
 // on click -> display next question
-multipleAnswer.addEventListener("click", function(event){
+multipleAnswer1.addEventListener("click", function(event){
+    event.preventDefault();
+    if (questionNumCount < 5){
+        questionDisplay();
+    }    
+});
+multipleAnswer2.addEventListener("click", function(event){
+    event.preventDefault();
+    if (questionNumCount < 5){
+        questionDisplay();
+    }    
+});
+multipleAnswer3.addEventListener("click", function(event){
+    event.preventDefault();
+    if (questionNumCount < 5){
+        questionDisplay();
+    }    
+});
+multipleAnswer4.addEventListener("click", function(event){
     event.preventDefault();
     if (questionNumCount < 5){
         questionDisplay();
