@@ -1,4 +1,8 @@
 // coding quiz challenge
+// var container
+var questionH = document.querySelector(".question");
+var answersH = document.querySelector(".answers");
+
 var questionNumCount = 5;
 var answerIndex = 0;
 
@@ -32,10 +36,12 @@ var correctAns = [
 //function to display questions and answers to console
 function questionDisplay(){
     for(var i =0; i < questionNumCount; i++){
+        questionH.textContent = questionString[i];
         console.log(questionString[i]);
         
         //for loops to display answers answerIndex max is 19
         for(var x=0; x <= 3; x++){
+            answersH.children[x].textContent = answerString[answerIndex];
             console.log(answerString[answerIndex]);
             answerIndex++;
         }
