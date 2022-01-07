@@ -1,5 +1,14 @@
 // coding quiz challenge
 
+var questionString = [
+    "Commonly used data types Do Not include:",
+    "The condition in an if/else statement is enclosed within ______.",
+    "Arrays in JavaScript can be used to store  _____.",
+    "String values must be enclosed within _____ when being assigned to varibles",
+    "A very useful tool used during development and debugging for printing content to the debugger is",
+];
+
+const answerString = [];
 // commonly used data types Do Not include:
 // 1). strings
 // 2. booleans //wrong
