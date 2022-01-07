@@ -8,7 +8,11 @@ var multipleAnswer2 = document.querySelector("#multianswer2");
 var multipleAnswer3 = document.querySelector("#multianswer3");
 var multipleAnswer4 = document.querySelector("#multianswer4");
 var questionTitle = document.querySelector(".container");
-var gameOverScreen = document.querySelection(".gameover");
+var gameOverScreen = document.querySelector(".gameOver");
+var clearHighScore = document.querySelector(".scores");
+var submitBtn = document.createElement("BUTTON");
+var goBack = document.createElement("BUTTON");
+var clearScore = document.createElement("BUTTON");
 
 var questionNumCount = 0;
 var answerIndex = 0;
@@ -16,6 +20,7 @@ var userAnswerCnt = 0;
 var correctCount = 0;
 var wrongCount = 0;
 var timerCount = 120;
+var finalScore = 0;
 
 // Array  of string questions
 var questionString = [
@@ -81,33 +86,38 @@ function startGame(){
     $("#start").hide();
     $("#quizTitle").hide();
     $("#quizIns").hide();
-    questionTitle.children[0].textContent = "Question"
+    questionTitle.children[0].textContent = "Question";
 
     startTimer();
     // $("h1").hide();
     // $("p").hide();
 }
 
-// $(document).ready(function(){
-//     $("#start").click(function(){
-//         $("h1").hide();
-//         $("p").hide();
-//     });
-// });
-
+// do the math of total score 20 points each correct question
+function successMath(){
+    finalScore = correctCount * 20; 
+}
 //Game over check correct and wrong answers, display save initial and score
 function gameOver(){
     // displays All done! your total score is ..  enter initials and submit button
-   $(".container").hide();
-
-
-//    document.body.appendChild()
-
+    $(".container").hide();
+    successMath();
+    gameOverScreen.children[0].textContent = "All Done!";
+    gameOverScreen.children[1].textContent = "Your Final Score is " + finalScore + ".";
+    gameOverScreen.children[2].textContent = "Enter Initials: ";
+    submitBtn.innerHTML = "SUBMIT";
+    document.body.appendChild(submitBtn);
 }
 
  // after submit display highscores with  with go back and clear highscore button 
 function showResults(){
-
+    $(".gameOver").hide();
+   
+    clearHighScore.children[0].textContent = "HIGHSCORES";
+    goBack.innerHTML = "GO BACK";
+    document.body.appendChild(goBack);
+    clearScore.innerHTML = "Clear HighScore";
+    document.body.appendChild(clearScore);
 }
 
 // timer function will  decrement 
@@ -121,7 +131,7 @@ function startTimer(){
     // game is done 
         if(timerCount === 0){
             gameOver();
-
+            showResults()
         }
     }, 1000);
 
