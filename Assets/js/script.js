@@ -1,5 +1,8 @@
 // coding quiz challenge
+var questionNumCount = 5;
+var answerIndex = 0;
 
+// Array  of string questions
 var questionString = [
     "Commonly used data types Do Not include:",
     "The condition in an if/else statement is enclosed within ______.",
@@ -8,38 +11,36 @@ var questionString = [
     "A very useful tool used during development and debugging for printing content to the debugger is",
 ];
 
-const answerString = [];
-// commonly used data types Do Not include:
-// 1). strings
-// 2. booleans //wrong
-// 3. alerts
-// 4. numbers
+// Array of multiple choice answers
+var answerString = [
+    "strings","booleans","alerts","numbers",
+    "quotes","curly brackets","parenthesis","square brackets",
+    "numbers and strings","other arrays","booleans","all of the above",
+    "commas","curly brackets","quotes","parenthesis",
+    "JavaScript","terminal/bash","for loops","console.log",
+];
 
-// the condition in an if/else statement is enclosed within ___.
+// array of correct answers
+var correctAns = [
+    "alerts",
+    "parenthesis",
+    "all of the above",
+    "quotes",
+    "console.log",
+];
 
-// 1.quotes
-// 2.curly brackets
-// 3.parenthesis //correct
-// 4.square brackets
+//function to display questions and answers to console
+function questionDisplay(){
+    for(var i =0; i < questionNumCount; i++){
+        console.log(questionString[i]);
+        
+        //for loops to display answers answerIndex max is 19
+        for(var x=0; x <= 3; x++){
+            console.log(answerString[answerIndex]);
+            answerIndex++;
+        }
+        console.log(answerIndex);
+    }
+}
 
-// arrays in JavaScript can be used to Store  ___
-
-// 1.numbers and strings
-// 2.other arrays
-// 3.booleans 
-// 4.all of the above //correct
-
-// string values must be enclosed within _____ when being assigned to varibles
-// 1.commas
-// 2.curly brackets // wrong
-// 3.quotes
-// 4.parenthesis
-
-// A very useful tool used during development and debugging for printing content to the debugger is 
-// 1. JavaScript
-// 2.terminal/bash 
-// 3.for loops //wrong
-// 4.console.log 
-
-
-
+questionDisplay();
