@@ -11,6 +11,8 @@ var multipleAnswer4 = document.querySelector("#multianswer4");
 var questionNumCount = 0;
 var answerIndex = 0;
 var userAnswerCnt = 0;
+var correctCount = 0;
+var wrongCount = 0;
 
 // Array  of string questions
 var questionString = [
@@ -46,10 +48,9 @@ function questionDisplay(){
     //for loops to display answers answerIndex max is 19
     for(var x=0; x <= 3; x++){
         answersH.children[x].textContent = answerString[answerIndex];
-       answerIndex++;
+        answerIndex++;
     }
-    console.log("answerIndex " + answerIndex);
-   // questionNumCount++;
+    
 }
 
 //check if answer selected is correct
@@ -61,8 +62,10 @@ function checkifCorrect(answer){
 // check if the answer chosen is correct
     if(answerString[userAnswer] === correctAns[questionNumCount]){
         console.log("correct answer");
+        correctCount++;        
     } else {
         console.log("wrong answer");
+        wrongCount++;
     }
 
 //increase index of question and answer to be displayed
@@ -70,6 +73,7 @@ function checkifCorrect(answer){
     questionNumCount++;
 }
 
+// timer function will  decrement 
 // start button -> on click display question
 startBTN.addEventListener("click", function(event){
     event.preventDefault();
