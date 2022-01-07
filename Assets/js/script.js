@@ -2,8 +2,9 @@
 // var container
 var questionH = document.querySelector(".question");
 var answersH = document.querySelector(".answers");
+var multipleAnswer = document.querySelector("#multianswer");
 
-var questionNumCount = 5;
+var questionNumCount = 0;
 var answerIndex = 0;
 
 // Array  of string questions
@@ -17,11 +18,11 @@ var questionString = [
 
 // Array of multiple choice answers
 var answerString = [
-    "strings","booleans","alerts","numbers",
-    "quotes","curly brackets","parenthesis","square brackets",
-    "numbers and strings","other arrays","booleans","all of the above",
-    "commas","curly brackets","quotes","parenthesis",
-    "JavaScript","terminal/bash","for loops","console.log",
+    "1. strings","2. booleans","3. alerts","4. numbers",
+    "1. quotes","2. curly brackets","3. parenthesis","4. square brackets",
+    "1. numbers and strings","2. other arrays","3. booleans","4. all of the above",
+    "1. commas","2. curly brackets","3. quotes","4. parenthesis",
+    "1. JavaScript","2. terminal/bash","3. for loops","4. console.log",
 ];
 
 // array of correct answers
@@ -35,18 +36,29 @@ var correctAns = [
 
 //function to display questions and answers to console
 function questionDisplay(){
-    for(var i =0; i < questionNumCount; i++){
-        questionH.textContent = questionString[i];
-        console.log(questionString[i]);
+    // for(var i =0; i < questionNumCount; i++){
+        questionH.textContent = questionString[questionNumCount];
+        //console.log(questionString[i]);
         
         //for loops to display answers answerIndex max is 19
         for(var x=0; x <= 3; x++){
             answersH.children[x].textContent = answerString[answerIndex];
-            console.log(answerString[answerIndex]);
+           // console.log(answerString[answerIndex]);
             answerIndex++;
         }
+        questionNumCount++;
         console.log(answerIndex);
-    }
+        console.log(questionNumCount);
+    // }
 }
 
-questionDisplay();
+//when question answer -> next one displays
+// on click -> display next question
+multipleAnswer.addEventListener("click", function(event){
+    event.preventDefault();
+    if (questionNumCount < 5){
+        questionDisplay();
+    }    
+});
+
+// questionDisplay();
