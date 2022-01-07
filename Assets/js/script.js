@@ -10,6 +10,7 @@ var multipleAnswer4 = document.querySelector("#multianswer4");
 
 var questionNumCount = 0;
 var answerIndex = 0;
+var userAnswerCnt = 0;
 
 // Array  of string questions
 var questionString = [
@@ -22,11 +23,11 @@ var questionString = [
 
 // Array of multiple choice answers
 var answerString = [
-    "1. strings","2. booleans","3. alerts","4. numbers",
-    "1. quotes","2. curly brackets","3. parenthesis","4. square brackets",
-    "1. numbers and strings","2. other arrays","3. booleans","4. all of the above",
-    "1. commas","2. curly brackets","3. quotes","4. parenthesis",
-    "1. JavaScript","2. terminal/bash","3. for loops","4. console.log",
+    "strings","booleans","alerts","numbers",
+    "quotes","curly brackets","parenthesis","square brackets",
+    "numbers and strings","other arrays","booleans","all of the above",
+    "commas","curly brackets","quotes","parenthesis",
+    "JavaScript","terminal/bash","for loops","console.log",
 ];
 
 // array of correct answers
@@ -45,14 +46,28 @@ function questionDisplay(){
     //for loops to display answers answerIndex max is 19
     for(var x=0; x <= 3; x++){
         answersH.children[x].textContent = answerString[answerIndex];
-        answerIndex++;
+       answerIndex++;
     }
-    questionNumCount++;
+    console.log("answerIndex " + answerIndex);
+   // questionNumCount++;
 }
 
 //check if answer selected is correct
-function checkifCorrect(){
+// answer will count number of answer selected
+function checkifCorrect(answer){
+// updating the index of multiple choice answer
+    var userAnswer = answer + userAnswerCnt;    
 
+// check if the answer chosen is correct
+    if(answerString[userAnswer] === correctAns[questionNumCount]){
+        console.log("correct answer");
+    } else {
+        console.log("wrong answer");
+    }
+
+//increase index of question and answer to be displayed
+    userAnswerCnt = userAnswerCnt + 4;
+    questionNumCount++;
 }
 
 // start button -> on click display question
@@ -65,24 +80,32 @@ startBTN.addEventListener("click", function(event){
 // on click -> display next question
 multipleAnswer1.addEventListener("click", function(event){
     event.preventDefault();
+    checkifCorrect(0);
+
     if (questionNumCount < 5){
         questionDisplay();
     }    
 });
 multipleAnswer2.addEventListener("click", function(event){
     event.preventDefault();
+    checkifCorrect(1);
+
     if (questionNumCount < 5){
         questionDisplay();
     }    
 });
 multipleAnswer3.addEventListener("click", function(event){
     event.preventDefault();
+    checkifCorrect(2);
+
     if (questionNumCount < 5){
         questionDisplay();
     }    
 });
 multipleAnswer4.addEventListener("click", function(event){
     event.preventDefault();
+    checkifCorrect(3);
+
     if (questionNumCount < 5){
         questionDisplay();
     }    
