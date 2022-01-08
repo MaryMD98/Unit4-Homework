@@ -19,7 +19,7 @@ var answerIndex = 0;
 var userAnswerCnt = 0;
 var correctCount = 0;
 var wrongCount = 0;
-var timerCount = 120;
+var timerCount = 10;
 var finalScore = 0;
 
 // Array  of string questions
@@ -95,7 +95,8 @@ function startGame(){
 
 // do the math of total score 20 points each correct question
 function successMath(){
-    finalScore = correctCount * 20; 
+    finalScore = correctCount * 20;
+    console.log("final score is " + finalScore); 
 }
 //Game over check correct and wrong answers, display save initial and score
 function gameOver(){
@@ -106,14 +107,30 @@ function gameOver(){
     gameOverScreen.children[1].textContent = "Your Final Score is " + finalScore + ".";
     gameOverScreen.children[2].textContent = "Enter Initials: ";
     submitBtn.innerHTML = "SUBMIT";
+    // gameOverScreen.children[3] = submitBtn;
     document.body.appendChild(submitBtn);
 }
+
+//event listener for submit, go back and clear highscore
+// submit button
+submitBtn.addEventListener("click", function(event){
+    event.preventDefault();  
+    submitBtn.style.visibility = "hidden";
+    // submitBtn.hide();
+    showResults(); 
+});
+
+// goBack = document.createElement("BUTTON");
+// clearScore = document.createElement("BUTTON");
+
 
  // after submit display highscores with  with go back and clear highscore button 
 function showResults(){
     $(".gameOver").hide();
    
     clearHighScore.children[0].textContent = "HIGHSCORES";
+    // clearHighScore.children[1] = goBack;
+    // clearHighScore.children[2] = clearScore;
     goBack.innerHTML = "GO BACK";
     document.body.appendChild(goBack);
     clearScore.innerHTML = "Clear HighScore";
@@ -122,7 +139,6 @@ function showResults(){
 
 // timer function will  decrement 
 function startTimer(){
-
     timer = setInterval(function(){
         timerCount--;
 
@@ -131,10 +147,9 @@ function startTimer(){
     // game is done 
         if(timerCount === 0){
             gameOver();
-            showResults()
+            clearInterval(timer);
         }
     }, 1000);
-
 }
 
 // start button -> on click display question
