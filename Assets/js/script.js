@@ -12,6 +12,7 @@ var clearHighScore = document.querySelector(".scores");
 var submitBtn = document.createElement("BUTTON");
 var goBack = document.createElement("BUTTON");
 var clearScore = document.createElement("BUTTON");
+var textArea = document.createElement("TEXTAREA");
 
 var questionNumCount = 0;
 var answerIndex = 0;
@@ -48,6 +49,27 @@ var correctAns = [
     "console.log",
 ];
 
+// start button -> on click display question
+startBTN.addEventListener("click", function(event){
+    event.preventDefault();
+    startGame();
+    questionDisplay();
+});
+
+//start of game, timer starts, first question is displayed, header and text are hidden
+function startGame(){
+    $("#start").hide();
+    $("#quizTitle").hide();
+    $("#quizIns").hide();
+    $(".container").show();
+
+    questionTitle.children[0].textContent = "Question";
+
+    startTimer();
+    // $("h1").hide();
+    // $("p").hide();
+}
+
 //function to display questions and answers to console
 function questionDisplay(){
     questionH.textContent = questionString[questionNumCount];
@@ -59,6 +81,60 @@ function questionDisplay(){
     }
 }
 
+//when question answer -> next one displays
+// on click -> display next question
+multipleAnswer1.addEventListener("click", function(event){
+    event.preventDefault();
+    checkifCorrect(0);
+
+    if (questionNumCount < 5){
+        questionDisplay();
+    }  else {
+        //timer stops - game stops
+        timerCount = 0;
+        // gameOver();
+    }
+});
+
+multipleAnswer2.addEventListener("click", function(event){
+    event.preventDefault();
+    checkifCorrect(1);
+
+    if (questionNumCount < 5){
+        questionDisplay();
+    } else {
+        //timer stops - game stops
+        timerCount = 0;
+        // gameOver();
+    }
+});
+
+multipleAnswer3.addEventListener("click", function(event){
+    event.preventDefault();
+    checkifCorrect(2);
+
+    if (questionNumCount < 5){
+        questionDisplay();
+    } else {
+        //timer stops - game stops
+        timerCount = 0;
+        // gameOver();
+    } 
+});
+
+multipleAnswer4.addEventListener("click", function(event){
+    event.preventDefault();
+    checkifCorrect(3);
+
+    if (questionNumCount < 5){
+        questionDisplay();
+    }  else {
+        //timer stops - game stops
+        timerCount = 0;
+        // gameOver();
+    } 
+});
+
 //check if answer selected is correct
 // answer will count number of answer selected
 function checkifCorrect(answer){
@@ -67,9 +143,12 @@ function checkifCorrect(answer){
 
 // check if the answer chosen is correct
     if(answerString[userAnswer] === correctAns[questionNumCount]){
-        console.log("correct answer");
+        console.log("correct answer!!!!!");
         correctCount++;        
     } else {
+        // timer is decresed to penalize wrong answer
+        timerCount = timerCount - 2;
+        console.log("timerCount " + timerCount);
         console.log("wrong answer");
         wrongCount++;
     }
@@ -79,16 +158,24 @@ function checkifCorrect(answer){
     questionNumCount++;
 }
 
-//start of game, timer starts, first question is displied, header and text are hidden
-function startGame(){
-    $("#start").hide();
-    $("#quizTitle").hide();
-    $("#quizIns").hide();
-    questionTitle.children[0].textContent = "Question";
+//Game over check correct and wrong answers, display save initial and score
+function gameOver(){
+    // displays All done! your total score is ..  enter initials and submit button
+    $(".container").hide();
+    $(".gameOver").show();
+    successMath();
+    gameOverScreen.children[0].textContent = "All Done!";
+    gameOverScreen.children[1].textContent = "Your Final Score is " + finalScore + ".";
+    gameOverScreen.children[2].textContent = "Enter Initials: ";
+    
+    textArea.innerHTML = "Enter Initials.. ";
+    document.body.appendChild(textArea);
 
-    startTimer();
-    // $("h1").hide();
-    // $("p").hide();
+    submitBtn.innerHTML = "SUBMIT";
+    document.body.appendChild(submitBtn);
+
+    textArea.style.visibility = "visible";
+    submitBtn.style.visibility = "visible";
 }
 
 // do the math of total score 20 points each correct question
@@ -96,28 +183,72 @@ function successMath(){
     finalScore = correctCount * 20;
     console.log("final score is " + finalScore); 
 }
-//Game over check correct and wrong answers, display save initial and score
-function gameOver(){
-    // displays All done! your total score is ..  enter initials and submit button
-    $(".container").hide();
-    successMath();
-    gameOverScreen.children[0].textContent = "All Done!";
-    gameOverScreen.children[1].textContent = "Your Final Score is " + finalScore + ".";
-    gameOverScreen.children[2].textContent = "Enter Initials: ";
-    submitBtn.innerHTML = "SUBMIT";
-    // gameOverScreen.children[3] = submitBtn;
-    document.body.appendChild(submitBtn);
-}
 
-//event listener for submit, go back and clear highscore
+//event listener for submit, to submit initials and score
 // submit button
 submitBtn.addEventListener("click", function(event){
     event.preventDefault();  
     submitBtn.style.visibility = "hidden";
-    // submitBtn.hide();
+    textArea.style.visibility = "hidden";
     showResults(); 
 });
 
+//event listener for the text area to add initials
+textArea.addEventListener('keydown', function(event){
+    // event.preventDefault();
+
+    var Key = event.key.toLowerCase();
+    var alphabeticNumericCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789 '.split('');
+    
+    
+    // if (alphabeticNumericCharacters.includes(key)){
+    //     for(var i = 0; i< element.length; i++){
+    //         element[i].textContent += event.key;
+    //     }
+    // }
+});
+
+ // after submit display highscores with  with go back and clear highscore button 
+ function showResults(){
+    $(".gameOver").hide();
+    $(".scores").show();
+   
+    clearHighScore.children[0].textContent = "HIGHSCORES";
+    goBack.innerHTML = "GO BACK";
+    document.body.appendChild(goBack);
+    clearScore.innerHTML = "Clear HighScore";
+    document.body.appendChild(clearScore);
+
+    goBack.style.visibility = "visible";
+    clearScore.style.visibility = "visible";
+}
+
+// go back starts the game one again 
+// store the score in local storage
+goBack.addEventListener("click", function(event){
+    event.preventDefault();  
+    goBack.style.visibility = "hidden";
+    clearScore.style.visibility = "hidden";
+    $(".scores").hide();
+    saveToLocal();
+    gameInit(); 
+});
+
+// clear score will reset the game completly 
+// clear the local storage to 0 
+clearScore.addEventListener("click", function(event){
+    event.preventDefault();  
+    goBack.style.visibility = "hidden";
+    clearScore.style.visibility = "hidden";
+    $(".scores").hide();
+    clearLocal(); 
+    gameInit();
+});
+
+// will save results to local storage and start the game again
+function saveToLocal(){
+
+}
 
 // start the parameters of the game to initial and start the game
 function gameInit(){
@@ -132,39 +263,11 @@ function gameInit(){
     $("#start").show();
     $("#quizTitle").show();
     $("#quizIns").show();
-
-    startGame();
 }
 
-// go back starts the game one again 
-// store the score in local storage
-goBack.addEventListener("click", function(event){
-    event.preventDefault();  
-    goBack.style.visibility = "hidden";
-    clearScore.style.visibility = "hidden";
-    $(".scores").hide();
-    gameInit(); 
-});
+// will clear the scores on local storage
+function clearLocal(){
 
-// clear score will reset the game completly 
-// clear the local storage to 0 
-clearScore.addEventListener("click", function(event){
-    event.preventDefault();  
-    goBack.style.visibility = "hidden";
-    clearScore.style.visibility = "hidden";
-    showResults(); 
-});
-
-
- // after submit display highscores with  with go back and clear highscore button 
-function showResults(){
-    $(".gameOver").hide();
-   
-    clearHighScore.children[0].textContent = "HIGHSCORES";
-    goBack.innerHTML = "GO BACK";
-    document.body.appendChild(goBack);
-    clearScore.innerHTML = "Clear HighScore";
-    document.body.appendChild(clearScore);
 }
 
 // timer function will  decrement 
@@ -175,62 +278,9 @@ function startTimer(){
     // while timer is on quiz is on, 
     // once timer is done, check the wrong and correct answers
     // game is done 
-        if(timerCount === 0){
+        if(timerCount <= 0){
             gameOver();
             clearInterval(timer);
         }
     }, 1000);
 }
-
-// start button -> on click display question
-startBTN.addEventListener("click", function(event){
-    event.preventDefault();
-    startGame();
-    questionDisplay();
-});
-
-//when question answer -> next one displays
-// on click -> display next question
-multipleAnswer1.addEventListener("click", function(event){
-    event.preventDefault();
-    checkifCorrect(0);
-
-    if (questionNumCount < 5){
-        questionDisplay();
-    }  else {
-        gameOver();
-    }
-
-});
-multipleAnswer2.addEventListener("click", function(event){
-    event.preventDefault();
-    checkifCorrect(1);
-
-    if (questionNumCount < 5){
-        questionDisplay();
-    } else {
-        gameOver();
-    }
-});
-multipleAnswer3.addEventListener("click", function(event){
-    event.preventDefault();
-    checkifCorrect(2);
-
-    if (questionNumCount < 5){
-        questionDisplay();
-    } else {
-        gameOver();
-    } 
-});
-multipleAnswer4.addEventListener("click", function(event){
-    event.preventDefault();
-    checkifCorrect(3);
-
-    if (questionNumCount < 5){
-        questionDisplay();
-    }  else {
-        gameOver();
-    } 
-});
-
-// questionDisplay();
