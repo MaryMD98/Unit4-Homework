@@ -1,5 +1,4 @@
 // coding quiz challenge
-// var container
 var questionH = document.querySelector(".question");
 var answersH = document.querySelector(".answers");
 var startBTN = document.querySelector("#start");
@@ -58,7 +57,6 @@ function questionDisplay(){
         answersH.children[x].textContent = answerString[answerIndex];
         answerIndex++;
     }
-
 }
 
 //check if answer selected is correct
@@ -120,8 +118,42 @@ submitBtn.addEventListener("click", function(event){
     showResults(); 
 });
 
-// goBack = document.createElement("BUTTON");
-// clearScore = document.createElement("BUTTON");
+
+// start the parameters of the game to initial and start the game
+function gameInit(){
+    questionNumCount = 0;
+    answerIndex = 0;
+    userAnswerCnt = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    timerCount = 10;
+    finalScore = 0;
+
+    $("#start").show();
+    $("#quizTitle").show();
+    $("#quizIns").show();
+
+    startGame();
+}
+
+// go back starts the game one again 
+// store the score in local storage
+goBack.addEventListener("click", function(event){
+    event.preventDefault();  
+    goBack.style.visibility = "hidden";
+    clearScore.style.visibility = "hidden";
+    $(".scores").hide();
+    gameInit(); 
+});
+
+// clear score will reset the game completly 
+// clear the local storage to 0 
+clearScore.addEventListener("click", function(event){
+    event.preventDefault();  
+    goBack.style.visibility = "hidden";
+    clearScore.style.visibility = "hidden";
+    showResults(); 
+});
 
 
  // after submit display highscores with  with go back and clear highscore button 
@@ -129,8 +161,6 @@ function showResults(){
     $(".gameOver").hide();
    
     clearHighScore.children[0].textContent = "HIGHSCORES";
-    // clearHighScore.children[1] = goBack;
-    // clearHighScore.children[2] = clearScore;
     goBack.innerHTML = "GO BACK";
     document.body.appendChild(goBack);
     clearScore.innerHTML = "Clear HighScore";
