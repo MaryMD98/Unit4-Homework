@@ -189,7 +189,7 @@ function gameOver(){
 
     textArea.style.visibility = "visible";
     submitBtn.style.visibility = "visible";
-    
+
     viewHighScore.style.visibility = "hidden";
     $("#showScores").hide();
     hideHighScore.style.visibility = "hidden";
@@ -218,7 +218,7 @@ textArea.addEventListener('keydown', function(event){
     var oldInitial = userInitials;
 
     // add both letters and add it to counter and local storage
-    userInitials = oldInitial.concat(event.key); 
+    userInitials = oldInitial.concat(event.key.toUpperCase()); 
 });
 
  // after submit display highscores with  with go back and clear highscore button 

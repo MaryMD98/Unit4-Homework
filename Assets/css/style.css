@@ -24,5 +24,6 @@ button{
 
 #timerDisplay {
     font-family: "Roboto", sans-serif;
-    padding: 20px;
+    /* padding: 10px; */
+    float: right;
 }
