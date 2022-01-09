@@ -9,10 +9,14 @@ var multipleAnswer4 = document.querySelector("#multianswer4");
 var questionTitle = document.querySelector(".container");
 var gameOverScreen = document.querySelector(".gameOver");
 var clearHighScore = document.querySelector(".scores");
+var highscoreDisplays = document.querySelector(".highscoreDisplay");
 var submitBtn = document.createElement("BUTTON");
 var goBack = document.createElement("BUTTON");
 var clearScore = document.createElement("BUTTON");
+var viewHighScore = document.createElement("BUTTON");
+var hideHighScore = document.createElement("BUTTON");
 var textArea = document.createElement("TEXTAREA");
+var timerDis = document.getElementById('timerDisplay');
 
 var questionNumCount = 0;
 var answerIndex = 0;
@@ -23,6 +27,7 @@ var timerCount = 10;
 var finalScore = 0;
 var userInitials = " ";
 var highscoreMsg = "*. ";
+var answerfromList = " ";
 
 // Array  of string questions
 var questionString = [
@@ -31,6 +36,11 @@ var questionString = [
     "Arrays in JavaScript can be used to store  _____.",
     "String values must be enclosed within _____ when being assigned to varibles",
     "A very useful tool used during development and debugging for printing content to the debugger is",
+];
+
+// number string
+var answerNum = [
+    "1. ", "2. ", "3. ", "4. ",
 ];
 
 // Array of multiple choice answers
@@ -64,8 +74,14 @@ function startGame(){
     $("#quizTitle").hide();
     $("#quizIns").hide();
     $(".container").show();
+    $("#timerDisplay").show();
 
     questionTitle.children[0].textContent = "Question";
+
+    viewHighScore.innerHTML = "View HighScore";
+    highscoreDisplays.children[0].appendChild(viewHighScore);
+
+    viewHighScore.style.visibility = "visible";
 
     startTimer();
     // $("h1").hide();
@@ -78,7 +94,8 @@ function questionDisplay(){
     
     //for loops to display answers answerIndex max is 19
     for(var x=0; x <= 3; x++){
-        answersH.children[x].textContent = answerString[answerIndex];
+
+        answersH.children[x].textContent = answerNum[x] + answerString[answerIndex];
         answerIndex++;
     }
 }
@@ -157,6 +174,7 @@ function checkifCorrect(answer){
 function gameOver(){
     // displays All done! your total score is ..  enter initials and submit button
     $(".container").hide();
+    $("#timerDisplay").hide();
     $(".gameOver").show();
     successMath();
     gameOverScreen.children[0].textContent = "All Done!";
@@ -164,13 +182,17 @@ function gameOver(){
     gameOverScreen.children[2].textContent = "Enter Initials: ";
     
     textArea.innerHTML = "Enter Initials.. ";
-    document.body.appendChild(textArea);
+    gameOverScreen.children[3].appendChild(textArea);
 
     submitBtn.innerHTML = "SUBMIT";
-    document.body.appendChild(submitBtn);
+    gameOverScreen.children[4].appendChild(submitBtn);
 
     textArea.style.visibility = "visible";
     submitBtn.style.visibility = "visible";
+    
+    viewHighScore.style.visibility = "hidden";
+    $("#showScores").hide();
+    hideHighScore.style.visibility = "hidden";
 }
 
 // do the math of total score 20 points each correct question
@@ -210,13 +232,13 @@ textArea.addEventListener('keydown', function(event){
     var highScore = localStorage.getItem("finalScore");
     
     clearHighScore.children[0].textContent = "HIGHSCORES";
-    clearHighScore.children[1].textContent = highscoreMsg.concat(highInitial, " - ", highScore);;
+    clearHighScore.children[1].textContent = highscoreMsg.concat(highInitial, " - ", highScore);
 
     goBack.innerHTML = "GO BACK";
-    document.body.appendChild(goBack);
+    clearHighScore.children[2].appendChild(goBack);
 
-    clearScore.innerHTML = "Clear HighScore";
-    document.body.appendChild(clearScore);
+    clearScore.innerHTML = "CLEAR HIGHSCORE";
+    clearHighScore.children[3].appendChild(clearScore);
 
     goBack.style.visibility = "visible";
     clearScore.style.visibility = "visible";
@@ -292,7 +314,30 @@ function startTimer(){
             gameOver();
             clearInterval(timer);
         }
+
+        timerDis.textContent = "TIME: " + timerCount;
     }, 1000);
 }
+
+// highscorebuttom to display on top corner
+viewHighScore.addEventListener("click", function(event){
+    event.preventDefault();
+    $("#showScores").show();  
+    var highInitial = localStorage.getItem("userInitials");
+    var highScore = localStorage.getItem("finalScore");
+
+    highscoreDisplays.children[1].textContent = highscoreMsg.concat(highInitial, " - ", highScore);
+
+    hideHighScore.innerHTML = "Hide HighScore";
+    highscoreDisplays.children[2].appendChild(hideHighScore);
+
+    hideHighScore.style.visibility = "visible";
+});
+
+// highscore hide from corner of page
+hideHighScore.addEventListener("click", function(event){
+    $("#showScores").hide();
+    hideHighScore.style.visibility = "hidden";
+});
 
 clearLocal();

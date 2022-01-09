@@ -9,50 +9,63 @@
     <title>Coding Assessment</title>
 </head>
 <body>
-    <header>
-        <div class= guiz>
-            <h1 id="quizTitle">Coding Quiz Challenge</h1>
-            <p id= "quizIns"> Try to answer the following code-related questions within the time,
-                keep in mind that incorrect answers will penalize your scoretime by ten seconds.</p>
-        </div>
-    </header>
-
-    <main>
-        <!-- start button -->
-        <div>
-             <button id = "start">START</button>
-
-             <!--multiple choice question  -->
-            <div class= container>
-                <h3></h3>
-                <p class = question></p>
-                <ul class= answers>
-                    <ol id=multianswer1></ol>
-                    <ol id=multianswer2></ol>
-                    <ol id=multianswer3></ol>
-                    <ol id=multianswer4></ol>
-                </ul>
+    <div class = "card">
+        <header>
+            <div class= "guiz">
+                <h1 id="quizTitle">Coding Quiz Challenge</h1>
+                <p id= "quizIns"> Try to answer the following code-related questions within the time,
+                    keep in mind that incorrect answers will penalize your scoretime by two seconds.</p>
             </div>
-        </div>    
-        
-        <!-- ALL done message -->
-        <div class = gameOver>
-            <h2></h2>
-            <p></p>
-            <div></div>
-            <div></div>
-        </div>
+        </header>
 
-        <!-- Highscores -->
-        <div class = scores>
-            <h2></h2>
-            <p></p>
-            <div></div>
-            <div></div>
-        </div>
+        <main>
+            <!-- start button -->
+            <div class = "box">
+                <button id = "start">START</button>
 
-    </main>
+                <!--multiple choice question  -->
+                <div class= "container">
+                    <h3></h3>
+                    <p class = "question"></p>
+                    <ul class= "answers">
+                        <ol id="multianswer1"></ol>
+                        <ol id="multianswer2"></ol>
+                        <ol id="multianswer3"></ol>
+                        <ol id="multianswer4"></ol>
+                    </ul>
+                </div>
+            </div>    
+            
+            <!-- ALL done message -->
+            <div class = "gameOver">
+                <h2></h2>
+                <p></p>
+                <p></p>
+                <div></div>
+                <div></div>
+            </div>
 
+            <!-- Highscores -->
+            <div class = "scores">
+                <h2></h2>
+                <p></p>
+                <div></div>
+                <div></div>
+            </div>
+            
+        </main>
+    </div>
+
+    <!-- highscores display -->
+    <div class="highscoreDisplay">
+        <div></div>
+        <p id = "showScores"></p>
+        <div></div>
+    </div>
+
+    <!-- timer display -->
+    <div id="timerDisplay"></div>
+    
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="Assets/js/script.js"></script>
 </body>

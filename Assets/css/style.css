@@ -1,0 +1,28 @@
+
+button{
+    background-color: #421596;
+    color:#e8e2ec;
+}
+
+.card{
+ display: block;
+ background-color: rgb(222, 207, 240);
+ border: 1px solid #eceff1;
+ border-radius: 8px;
+ box-shadow: rgba(60, 64, 67, 0.3) 0 1px 2px 0,
+    rgba(60, 64, 67, 0.15) 0 1px 3px 1px;
+ margin: 40px auto;
+ padding: 20px;
+ width: 60vw;
+}
+
+.scores p {
+ background-color: #9565c2;
+ font-size: 16px;
+ color: white;
+}
+
+#timerDisplay {
+    font-family: "Roboto", sans-serif;
+    padding: 20px;
+}
