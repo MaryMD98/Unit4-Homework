@@ -21,6 +21,8 @@ var correctCount = 0;
 var wrongCount = 0;
 var timerCount = 10;
 var finalScore = 0;
+var userInitials = " ";
+var highscoreMsg = "*. ";
 
 // Array  of string questions
 var questionString = [
@@ -92,7 +94,6 @@ multipleAnswer1.addEventListener("click", function(event){
     }  else {
         //timer stops - game stops
         timerCount = 0;
-        // gameOver();
     }
 });
 
@@ -105,7 +106,6 @@ multipleAnswer2.addEventListener("click", function(event){
     } else {
         //timer stops - game stops
         timerCount = 0;
-        // gameOver();
     }
 });
 
@@ -118,7 +118,6 @@ multipleAnswer3.addEventListener("click", function(event){
     } else {
         //timer stops - game stops
         timerCount = 0;
-        // gameOver();
     } 
 });
 
@@ -131,7 +130,6 @@ multipleAnswer4.addEventListener("click", function(event){
     }  else {
         //timer stops - game stops
         timerCount = 0;
-        // gameOver();
     } 
 });
 
@@ -143,13 +141,10 @@ function checkifCorrect(answer){
 
 // check if the answer chosen is correct
     if(answerString[userAnswer] === correctAns[questionNumCount]){
-        console.log("correct answer!!!!!");
         correctCount++;        
     } else {
         // timer is decresed to penalize wrong answer
         timerCount = timerCount - 2;
-        console.log("timerCount " + timerCount);
-        console.log("wrong answer");
         wrongCount++;
     }
 
@@ -181,6 +176,7 @@ function gameOver(){
 // do the math of total score 20 points each correct question
 function successMath(){
     finalScore = correctCount * 20;
+    
     console.log("final score is " + finalScore); 
 }
 
@@ -190,32 +186,35 @@ submitBtn.addEventListener("click", function(event){
     event.preventDefault();  
     submitBtn.style.visibility = "hidden";
     textArea.style.visibility = "hidden";
+    textArea.value = " ";
     showResults(); 
 });
 
 //event listener for the text area to add initials
 textArea.addEventListener('keydown', function(event){
-    // event.preventDefault();
+    // get old letter to add to new letter
+    var oldInitial = userInitials;
 
-    var Key = event.key.toLowerCase();
-    var alphabeticNumericCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789 '.split('');
-    
-    
-    // if (alphabeticNumericCharacters.includes(key)){
-    //     for(var i = 0; i< element.length; i++){
-    //         element[i].textContent += event.key;
-    //     }
-    // }
+    // add both letters and add it to counter and local storage
+    userInitials = oldInitial.concat(event.key); 
 });
 
  // after submit display highscores with  with go back and clear highscore button 
  function showResults(){
     $(".gameOver").hide();
     $(".scores").show();
-   
+
+    checkLocal();
+
+    var highInitial = localStorage.getItem("userInitials");
+    var highScore = localStorage.getItem("finalScore");
+    
     clearHighScore.children[0].textContent = "HIGHSCORES";
+    clearHighScore.children[1].textContent = highscoreMsg.concat(highInitial, " - ", highScore);;
+
     goBack.innerHTML = "GO BACK";
     document.body.appendChild(goBack);
+
     clearScore.innerHTML = "Clear HighScore";
     document.body.appendChild(clearScore);
 
@@ -227,10 +226,11 @@ textArea.addEventListener('keydown', function(event){
 // store the score in local storage
 goBack.addEventListener("click", function(event){
     event.preventDefault();  
+
     goBack.style.visibility = "hidden";
     clearScore.style.visibility = "hidden";
+
     $(".scores").hide();
-    saveToLocal();
     gameInit(); 
 });
 
@@ -238,16 +238,23 @@ goBack.addEventListener("click", function(event){
 // clear the local storage to 0 
 clearScore.addEventListener("click", function(event){
     event.preventDefault();  
+
     goBack.style.visibility = "hidden";
     clearScore.style.visibility = "hidden";
+
     $(".scores").hide();
     clearLocal(); 
     gameInit();
 });
 
-// will save results to local storage and start the game again
-function saveToLocal(){
+// will check results from local and saves highest score to local storage to display
+function checkLocal(){
+    var oldscore = localStorage.getItem("finalScore");
 
+    if(finalScore >= oldscore){
+        localStorage.setItem("finalScore" , finalScore);
+        localStorage.setItem("userInitials" , userInitials);
+    } 
 }
 
 // start the parameters of the game to initial and start the game
@@ -259,15 +266,18 @@ function gameInit(){
     wrongCount = 0;
     timerCount = 10;
     finalScore = 0;
+    userInitials = " ";
 
     $("#start").show();
     $("#quizTitle").show();
     $("#quizIns").show();
 }
 
-// will clear the scores on local storage
+// will clear the scores on local storage and resets the game
 function clearLocal(){
-
+// Initializes local storage when start of game and when reset
+    localStorage.setItem("finalScore" , 0);
+    localStorage.setItem("userInitials" , " ");
 }
 
 // timer function will  decrement 
@@ -284,3 +294,5 @@ function startTimer(){
         }
     }, 1000);
 }
+
+clearLocal();
